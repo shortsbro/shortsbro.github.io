@@ -1,3 +1,3 @@
 layout: page
-title: "PAGE-TITLE"
-permalink: /URL-PATH
+title: "ShortsBro Privacy Policy"
+permalink: /privacy
