@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShortsBro User Guide (General)</title>
+
+    <!--
+      ShortsBro UI uses Jetpack Compose Material icons (Icons.*).
+      This document renders matching icons on the web using Material Symbols with the same names.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Noto+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg0: #0b0f14;
+        --bg1: #0f1822;
+        --card: rgba(255, 255, 255, 0.06);
+        --card2: rgba(255, 255, 255, 0.08);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: rgba(255, 255, 255, 0.9);
+        --muted: rgba(255, 255, 255, 0.7);
+        --muted2: rgba(255, 255, 255, 0.55);
+        --accent: #ffdd57;
+        --accent2: #7bf1a8;
+        --danger: #ff6b6b;
+        --radius: 18px;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background: radial-gradient(1100px 600px at 10% 0%, rgba(255, 221, 87, 0.16), transparent 60%),
+          radial-gradient(900px 500px at 90% 20%, rgba(123, 241, 168, 0.14), transparent 58%),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+        font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration-color: rgba(255, 255, 255, 0.35);
+        text-underline-offset: 3px;
+      }
+
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 28px 18px 64px;
+      }
+
+      header.hero {
+        border: 1px solid var(--line);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+        border-radius: calc(var(--radius) + 8px);
+        padding: 22px 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      header.hero:before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(800px 260px at 20% 10%, rgba(255, 221, 87, 0.12), transparent 60%),
+          radial-gradient(700px 220px at 80% 30%, rgba(123, 241, 168, 0.12), transparent 55%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans", system-ui, sans-serif;
+        font-size: 26px;
+        letter-spacing: -0.3px;
+      }
+
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+      }
+
+      .pill {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        color: var(--muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pill strong {
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 700;
+      }
+
+      .mi {
+        font-family: "Material Symbols Rounded";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-flex;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+        vertical-align: -4px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .mi.sm {
+        font-size: 18px;
+        vertical-align: -4px;
+      }
+
+      .mi.accent {
+        color: var(--accent);
+      }
+
+      nav.toc {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.18);
+        display: grid;
+        gap: 8px;
+      }
+
+      nav.toc a {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(0, 0, 0, 0.18);
+        text-decoration: none;
+      }
+
+      nav.toc a:hover {
+        background: rgba(0, 0, 0, 0.26);
+      }
+
+      section.card {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+
+      section.card h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: -0.2px;
+      }
+
+      section.card p {
+        margin: 8px 0;
+        color: var(--muted);
+      }
+
+      figure.shot {
+        margin: 12px 0 0;
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.22);
+      }
+
+      figure.shot img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      figure.shot figcaption {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted2);
+      }
+
+      .grid2 {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+      }
+
+      .hint {
+        border: 1px solid rgba(255, 221, 87, 0.25);
+        background: rgba(255, 221, 87, 0.08);
+        color: rgba(255, 255, 255, 0.86);
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .box {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 13px;
+        margin: 4px 6px 4px 0;
+        white-space: nowrap;
+      }
+
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.35);
+        padding: 2px 7px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 12px;
+      }
+
+      .callout {
+        border-left: 4px solid rgba(123, 241, 168, 0.65);
+        padding: 10px 12px;
+        background: rgba(123, 241, 168, 0.08);
+        border-radius: 14px;
+      }
+
+      .danger {
+        border-left-color: rgba(255, 107, 107, 0.7);
+        background: rgba(255, 107, 107, 0.08);
+      }
+
+      .mini {
+        font-size: 13px;
+        color: var(--muted2);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.10);
+        margin: 14px 0;
+      }
+
+      @media (min-width: 880px) {
+        .hero-inner {
+          grid-template-columns: 1.2fr 0.8fr;
+          align-items: start;
+        }
+        nav.toc {
+          margin-top: 0;
+          padding-top: 0;
+          border-top: none;
+        }
+        .grid2 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="brand">
+              <img src="./assets/ic_launcher.png" alt="ShortsBro app icon" />
+              <div>
+                <h1>ShortsBro User Guide</h1>
+                <p class="sub">General build. Focused on floating media controls and Shorts auto-next.</p>
+              </div>
+            </div>
+
+            <div class="pill-row" aria-label="Document meta">
+              <span class="pill"><span class="mi sm accent">smartphone</span> Android</span>
+              <span class="pill"><span class="mi sm accent">movie</span> YouTube Watch/Shorts</span>
+              <span class="pill"><span class="mi sm accent">bolt</span> Shorts Auto-Next</span>
+              <span class="pill"><span class="mi sm accent">settings</span> Configurable in Settings</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="mini">
+              Icons in this document are rendered with Material Symbols matching the app's Compose Material icons (<span class="kbd">Icons.*</span>).
+            </p>
+          </div>
+
+          <nav class="toc" aria-label="Table of contents">
+            <a href="#start"><span class="mi">rocket_launch</span> Start</a>
+            <a href="#browsing"><span class="mi">language</span> Basic Browsing</a>
+            <a href="#yt-controls"><span class="mi">tune</span> YouTube Controls</a>
+            <a href="#auto-next"><span class="mi">skip_next</span> Shorts Auto-Next</a>
+            <a href="#settings"><span class="mi">settings</span> Settings</a>
+            <a href="#debug"><span class="mi">bug_report</span> Debug</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="card" id="start">
+        <h2>Start</h2>
+        <p>When you launch the app, the default start page is <span class="kbd">m.youtube.com</span>.</p>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_01_home.png" alt="App launch screen (real capture)" />
+          <figcaption>Real capture: initial screen after launching ShortsBro</figcaption>
+        </figure>
+      </section>
+
+      <section class="card" id="browsing">
+        <h2>Basic Browsing</h2>
+        <p>Type a URL in the address field to navigate.</p>
+
+        <div class="box">
+          <strong>Navigation Buttons</strong>
+          <div class="chips" aria-label="Navigation buttons">
+            <span class="k"><span class="mi">arrow_back</span> Back</span>
+            <span class="k"><span class="mi">arrow_forward</span> Forward</span>
+            <span class="k"><span class="mi">home</span> Home</span>
+            <span class="k"><span class="mi">refresh</span> Reload</span>
+          </div>
+          <p class="mini">In the current build, the address-bar overflow menu (⋮) is removed. Open Settings from the floating controls (below).</p>
+        </div>
+      </section>
+
+      <section class="card" id="yt-controls">
+        <h2>YouTube Controls (Watch/Shorts)</h2>
+        <p>Floating controls appear only on YouTube <span class="kbd">Watch</span> or <span class="kbd">Shorts</span> pages.</p>
+
+        <div class="box">
+          <strong>Floating Control Box (Draggable)</strong>
+          <p class="mini">
+            Media controls are shown as a floating button cluster near the bottom of the screen.
+            <strong>Long-press and drag</strong> the cluster to reposition it.
+          </p>
+          <p class="mini">
+            Tap the hamburger button (<span class="mi sm">menu</span>) to open <strong>Settings</strong>.
+            Layout (1/2 columns) and the volume slider are configured in <span class="kbd">Media Controls</span>.
+          </p>
+        </div>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_05_after_tap.png" alt="Floating control box on Shorts playback (real capture)" />
+          <figcaption>Real capture: floating controls during Shorts playback (hamburger, buttons, vertical volume slider)</figcaption>
+        </figure>
+
+        <div class="box">
+          <strong>Common Controls</strong>
+          <div class="chips" aria-label="YouTube controls">
+            <span class="k"><span class="mi">menu</span> Settings (hamburger)</span>
+            <span class="k"><span class="mi">volume_up</span> Sound (mute/unmute)</span>
+            <span class="k"><span class="mi">replay_5</span> -5s</span>
+            <span class="k"><span class="mi">forward_5</span> +5s</span>
+            <span class="k"><span class="mi">settings</span> Quality</span>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>Seek Buttons: Short / Long Press</strong>
+            <p class="mini">
+              Short press <span class="mi sm">replay_5</span>/<span class="mi sm">forward_5</span> to jump 5 seconds.
+              Long press to select a 10-second jump.
+            </p>
+          </div>
+          <div class="box">
+            <strong>Speed & Quality (PRO)</strong>
+            <p class="mini">
+              In the PRO build, tapping the speed button opens a sheet where you can select both playback speed and video quality on the same screen.
+              Available quality options depend on the YouTube player (e.g., Auto, 720p, 1080p).
+              In the general build, speed/quality UI may be limited.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="auto-next">
+        <h2>Shorts Auto-Next</h2>
+        <p>When <span class="kbd">Auto Next for Shorts</span> is enabled, ShortsBro automatically advances to the next Short after the current one ends.</p>
+        <div class="grid2">
+          <div class="box">
+            <strong>Behavior</strong>
+            <p class="mini">
+              1) Detects Shorts completion<br />
+              2) Attempts to move to the next Short<br />
+              3) Uses fallback logic if looping/replay is detected
+            </p>
+          </div>
+          <div class="box">
+            <strong>Delay</strong>
+            <p class="mini">Configure the delay in Settings: <span class="kbd">0s</span>, <span class="kbd">0.5s</span>, or <span class="kbd">1.0s</span>.</p>
+          </div>
+        </div>
+        <div class="callout danger" style="margin-top: 12px">
+          <strong>Note</strong>
+          <p class="mini">Auto-next depends on YouTube DOM/player structure and may break when YouTube updates.</p>
+        </div>
+      </section>
+
+      <section class="card" id="settings">
+        <h2>Settings</h2>
+        <p>On a YouTube playback screen, tap the hamburger button (<span class="mi sm">menu</span>) in the floating control box to open Settings.</p>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_10_settings_open.png" alt="Settings screen (top) real capture" />
+          <figcaption>Real capture: Settings (Browsing: Auto Next / Delay; Media Controls options)</figcaption>
+        </figure>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>Browsing</strong>
+            <p class="mini">
+              <span class="kbd">Auto Next for Shorts</span><br />
+              <span class="kbd">Next Short Delay</span><br />
+              <span class="kbd">Background Playback</span> is not available in the general build.
+            </p>
+          </div>
+          <div class="box">
+            <strong>Media Controls (Floating UI)</strong>
+            <p class="mini">
+              <span class="kbd">Volume Slider</span>: show/hide the vertical volume slider next to the floating controls.<br />
+              <span class="kbd">1 Column</span> / <span class="kbd">2 Columns</span>: choose one or two columns for the floating buttons.<br />
+              Toggle buttons individually: <span class="kbd">Sleep Timer Button</span>, <span class="kbd">Speed Button</span>, <span class="kbd">Skip Back Button</span>,
+              <span class="kbd">Skip Forward Button</span>, <span class="kbd">Back Button</span>.
+            </p>
+            <p class="mini">
+              Note: the <span class="mi sm">timer</span> icon represents <strong>Sleep Timer</strong> (PRO feature), not playback speed.
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="box">
+          <strong>Controls Background Opacity (Slider)</strong>
+          <p class="mini">
+            Adjust the opacity of the background scrim behind the floating control box.
+            Higher values improve visibility; lower values reduce screen obstruction.
+          </p>
+        </div>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_11_settings_scroll1.png" alt="Controls Background Opacity & Debug options (real capture)" />
+          <figcaption>Real capture: opacity slider and debug options</figcaption>
+        </figure>
+
+        <div class="divider"></div>
+
+        <div class="callout">
+          <strong>PRO Differences (Reference)</strong>
+          <p class="mini">
+            PRO unlocks features such as Sleep Timer and the speed/quality selection sheet. Labels and available toggles may differ by edition.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="debug">
+        <h2>Debug</h2>
+        <p>Useful when reporting issues or collecting evidence for reproducible bugs.</p>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>Debug Overlay</strong>
+            <p class="mini">Shows URL, load state, errors, and console logs on-screen for screenshots.</p>
+          </div>
+          <div class="box">
+            <strong>Debug Log File</strong>
+            <p class="mini">Writes debug events to a text file and keeps only the most recent ~30 minutes. Use <span class="kbd">Clear Log</span> to reset.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
+

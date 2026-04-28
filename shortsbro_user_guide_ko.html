@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShortsBro 사용법 (일반 버전)</title>
+
+    <!--
+      ShortsBro UI는 Jetpack Compose Material 아이콘(Icons.*)을 광범위하게 사용합니다.
+      이 문서는 앱에서 사용되는 동일한 Material 아이콘을 웹에서도 같은 이름의 Material Symbols로 렌더링합니다.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Noto+Sans+KR:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg0: #0b0f14;
+        --bg1: #0f1822;
+        --card: rgba(255, 255, 255, 0.06);
+        --card2: rgba(255, 255, 255, 0.08);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: rgba(255, 255, 255, 0.9);
+        --muted: rgba(255, 255, 255, 0.7);
+        --muted2: rgba(255, 255, 255, 0.55);
+        --accent: #ffdd57;
+        --accent2: #7bf1a8;
+        --danger: #ff6b6b;
+        --radius: 18px;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background: radial-gradient(1100px 600px at 10% 0%, rgba(255, 221, 87, 0.16), transparent 60%),
+          radial-gradient(900px 500px at 90% 20%, rgba(123, 241, 168, 0.14), transparent 58%),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+        font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration-color: rgba(255, 255, 255, 0.35);
+        text-underline-offset: 3px;
+      }
+
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 28px 18px 64px;
+      }
+
+      header.hero {
+        border: 1px solid var(--line);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+        border-radius: calc(var(--radius) + 8px);
+        padding: 22px 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      header.hero:before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(800px 260px at 20% 10%, rgba(255, 221, 87, 0.12), transparent 60%),
+          radial-gradient(700px 220px at 80% 30%, rgba(123, 241, 168, 0.12), transparent 55%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans KR", system-ui, sans-serif;
+        font-size: 26px;
+        letter-spacing: -0.3px;
+      }
+
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+      }
+
+      .pill {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        color: var(--muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pill strong {
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 700;
+      }
+
+      .mi {
+        font-family: "Material Symbols Rounded";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-flex;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+        vertical-align: -4px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .mi.sm {
+        font-size: 18px;
+        vertical-align: -4px;
+      }
+
+      .mi.accent {
+        color: var(--accent);
+      }
+
+      nav.toc {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.18);
+        display: grid;
+        gap: 8px;
+      }
+
+      nav.toc a {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(0, 0, 0, 0.18);
+        text-decoration: none;
+      }
+
+      nav.toc a:hover {
+        background: rgba(0, 0, 0, 0.26);
+      }
+
+      section.card {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+
+      section.card h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: -0.2px;
+      }
+
+      section.card p {
+        margin: 8px 0;
+        color: var(--muted);
+      }
+
+      figure.shot {
+        margin: 12px 0 0;
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.22);
+      }
+
+      figure.shot img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      figure.shot figcaption {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted2);
+      }
+
+      .grid2 {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+      }
+
+      .hint {
+        border: 1px solid rgba(255, 221, 87, 0.25);
+        background: rgba(255, 221, 87, 0.08);
+        color: rgba(255, 255, 255, 0.86);
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .box {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 13px;
+        margin: 4px 6px 4px 0;
+        white-space: nowrap;
+      }
+
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.35);
+        padding: 2px 7px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 12px;
+      }
+
+      .callout {
+        border-left: 4px solid rgba(123, 241, 168, 0.65);
+        padding: 10px 12px;
+        background: rgba(123, 241, 168, 0.08);
+        border-radius: 14px;
+      }
+
+      .danger {
+        border-left-color: rgba(255, 107, 107, 0.7);
+        background: rgba(255, 107, 107, 0.08);
+      }
+
+      .mini {
+        font-size: 13px;
+        color: var(--muted2);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.10);
+        margin: 14px 0;
+      }
+
+      @media (min-width: 880px) {
+        .hero-inner {
+          grid-template-columns: 1.2fr 0.8fr;
+          align-items: start;
+        }
+        nav.toc {
+          margin-top: 0;
+          padding-top: 0;
+          border-top: none;
+        }
+        .grid2 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="brand">
+              <img src="./assets/ic_launcher.png" alt="ShortsBro 앱 아이콘" />
+              <div>
+                <h1>ShortsBro 사용법</h1>
+                <p class="sub">일반 버전 기준. YouTube 재생 제어(사운드/시크/속도/화질/전체화면)와 Shorts 자동 다음 재생을 중심으로 설명합니다.</p>
+              </div>
+            </div>
+
+            <div class="pill-row" aria-label="문서 메타">
+              <span class="pill"><span class="mi sm accent">smartphone</span> Android</span>
+              <span class="pill"><span class="mi sm accent">movie</span> YouTube Watch/Shorts</span>
+              <span class="pill"><span class="mi sm accent">bolt</span> Shorts Auto-Next</span>
+              <span class="pill"><span class="mi sm accent">settings</span> 설정에서 토글</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="mini">
+              아이콘 표시는 앱 UI의 Compose Material 아이콘(<span class="kbd">Icons.*</span>)과 동일한 이름의 Material Symbols로 렌더링합니다.
+              (예: 앱의 <span class="mi sm">home</span> 홈 버튼 = 문서의 <span class="mi sm">home</span>)
+            </p>
+          </div>
+
+          <nav class="toc" aria-label="목차">
+            <a href="#start"><span class="mi">rocket_launch</span> 시작하기</a>
+            <a href="#browsing"><span class="mi">language</span> 기본 브라우징</a>
+            <a href="#yt-controls"><span class="mi">tune</span> YouTube 컨트롤</a>
+            <a href="#auto-next"><span class="mi">skip_next</span> Shorts 자동 다음</a>
+            <a href="#settings"><span class="mi">settings</span> 설정</a>
+            <a href="#debug"><span class="mi">bug_report</span> Debug 도구</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="card" id="start">
+        <h2>시작하기</h2>
+        <p>앱을 실행하면 기본 시작 페이지는 <span class="kbd">m.youtube.com</span> 입니다.</p>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_01_home.png" alt="ShortsBro 실행 직후 화면(실제 캡처)" />
+          <figcaption>실제 캡처: 앱 실행 직후 기본 시작 페이지</figcaption>
+        </figure>
+      </section>
+
+      <section class="card" id="browsing">
+        <h2>기본 브라우징</h2>
+        <p>주소창에 URL을 입력하면 해당 페이지로 이동합니다.</p>
+
+        <div class="box">
+          <strong>하단 탐색 버튼</strong>
+          <div class="chips" aria-label="탐색 버튼">
+            <span class="k"><span class="mi">arrow_back</span> Back</span>
+            <span class="k"><span class="mi">arrow_forward</span> Forward</span>
+            <span class="k"><span class="mi">home</span> Home</span>
+            <span class="k"><span class="mi">refresh</span> Reload</span>
+          </div>
+          <p class="mini">
+            현재 버전에서는 주소창 메뉴(⋮)가 제거되었습니다. 설정은 아래의 “플로팅 컨트롤 박스”에서 들어갑니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="yt-controls">
+        <h2>YouTube 재생 컨트롤 (Watch/Shorts)</h2>
+        <p>YouTube의 <span class="kbd">Watch</span> 또는 <span class="kbd">Shorts</span> 페이지에서만 플로팅 컨트롤이 표시됩니다.</p>
+
+        <div class="box">
+          <strong>플로팅 컨트롤 박스(드래그 가능)</strong>
+          <p class="mini">
+            현재 버전의 미디어 컨트롤은 화면 하단에 “떠 있는 버튼 묶음(플로팅 컨트롤 박스)” 형태로 표시됩니다.
+            컨트롤 박스를 <strong>길게 누른 뒤 드래그</strong>하면 위치를 옮길 수 있습니다.
+          </p>
+          <p class="mini">
+            플로팅 컨트롤 박스의 햄버거 버튼(<span class="mi sm">menu</span>)을 누르면 <strong>설정 화면</strong>으로 이동합니다.
+            버튼 배치(1열/2열)와 볼륨 슬라이더 표시 여부는 설정 화면의 <span class="kbd">Media Controls</span>에서 조절합니다.
+          </p>
+        </div>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_05_after_tap.png" alt="YouTube Shorts 재생 중 플로팅 컨트롤 박스(실제 캡처)" />
+          <figcaption>실제 캡처: Shorts 재생 중 플로팅 컨트롤 박스(햄버거/버튼/세로 볼륨 슬라이더)</figcaption>
+        </figure>
+
+        <div class="box">
+          <strong>대표 컨트롤</strong>
+          <div class="chips" aria-label="유튜브 컨트롤">
+            <span class="k"><span class="mi">menu</span> 설정(햄버거)</span>
+            <span class="k"><span class="mi">volume_up</span> Sound (음소거/해제)</span>
+            <span class="k"><span class="mi">replay_5</span> -5s</span>
+            <span class="k"><span class="mi">forward_5</span> +5s</span>
+            <span class="k"><span class="mi">settings</span> Quality</span>
+          </div>
+          <p class="mini">
+            실제 버튼 라벨/배치는 버전에 따라 조금 달라질 수 있으나, 기능은 동일합니다.
+          </p>
+        </div>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>시크(탐색) 버튼: 짧게/길게 누르기</strong>
+            <p class="mini">
+              <span class="mi sm">replay_5</span>/<span class="mi sm">forward_5</span>를
+              <strong>짧게 누르면</strong> 5초 이동, <strong>길게 누르면</strong> 10초 이동 옵션을 선택할 수 있습니다.
+            </p>
+          </div>
+          <div class="box">
+            <strong>속도 / 화질 선택</strong>
+            <p class="mini">
+              프로 버전에서는 배속(재생 속도) 버튼을 누르면 배속과 화질을 <strong>한 화면에서 함께</strong> 선택할 수 있습니다.
+              표시되는 화질 항목은 YouTube 플레이어가 제공하는 값(예: Auto, 720p, 1080p 등)에 따라 달라집니다.
+              일반 버전에서는 배속/화질 선택 UI가 제한될 수 있습니다.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card" id="auto-next">
+        <h2>Shorts 자동 다음 재생 (Auto Next)</h2>
+        <p>
+          <span class="kbd">Auto Next for Shorts</span>를 켜두면, 같은 Shorts가 끝났을 때 다음 Shorts로 자동 이동합니다.
+        </p>
+        <div class="grid2">
+          <div class="box">
+            <strong>동작</strong>
+            <p class="mini">
+              1) Shorts 종료 감지<br />
+              2) 다음 Shorts로 이동 시도<br />
+              3) 반복 재생 등 예외가 감지되면 fallback 로직으로 다음 Shorts를 다시 시도합니다.
+            </p>
+          </div>
+          <div class="box">
+            <strong>지연 시간(Delay)</strong>
+            <p class="mini">
+              자동 이동의 지연 시간은 <span class="kbd">0s</span>, <span class="kbd">0.5s</span>, <span class="kbd">1.0s</span> 중에서 선택할 수 있습니다.
+              (설정에서 조정)
+            </p>
+          </div>
+        </div>
+        <div class="callout danger" style="margin-top: 12px">
+          <strong>주의</strong>
+          <p class="mini">
+            YouTube의 DOM/플레이어 구조가 변경되면 Auto Next 동작이 깨질 수 있습니다. 이 경우 업데이트가 필요할 수 있습니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="settings">
+        <h2>설정</h2>
+        <p>
+          YouTube 재생 화면에서 플로팅 컨트롤 박스의 햄버거 버튼(<span class="mi sm">menu</span>)을 누르면 설정 화면으로 이동합니다.
+        </p>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_10_settings_open.png" alt="설정 화면 상단(Browsing/Media Controls 일부, 실제 캡처)" />
+          <figcaption>실제 캡처: Settings 상단(Browsing: Auto Next, Next Short Delay / Media Controls 일부)</figcaption>
+        </figure>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>Browsing</strong>
+            <p class="mini">
+              <span class="kbd">Auto Next for Shorts</span><br />
+              <span class="kbd">Next Short Delay</span><br />
+              <span class="kbd">Background Playback</span>은 일반 버전에서 비활성입니다.
+            </p>
+          </div>
+          <div class="box">
+            <strong>Media Controls (플로팅 버튼 구성)</strong>
+            <p class="mini">
+              <span class="kbd">Volume Slider</span>: 플로팅 컨트롤 박스 옆에 세로 볼륨 슬라이더를 표시합니다.<br />
+              <span class="kbd">1 Column</span> / <span class="kbd">2 Columns</span>: 플로팅 버튼의 배치를 1열 또는 2열로 바꿉니다.<br />
+              <span class="kbd">Sleep Timer Button</span>, <span class="kbd">Speed Button</span>,
+              <span class="kbd">Skip Back Button</span>, <span class="kbd">Skip Forward Button</span>, <span class="kbd">Back Button</span>:
+              각 버튼의 표시 여부를 개별로 켜고 끌 수 있습니다.
+            </p>
+            <p class="mini">
+              참고: <span class="mi sm">timer</span> 아이콘은 “재생 속도”가 아니라 <strong>수면 타이머(Sleep Timer)</strong>를 의미합니다(프로 기능).
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="box">
+          <strong>Controls Background Opacity (슬라이더)</strong>
+          <p class="mini">
+            플로팅 컨트롤 박스 뒤쪽의 반투명 배경(스크림) 진하기를 슬라이더로 조절합니다.
+            값이 높을수록 버튼이 잘 보이고, 낮을수록 화면 가림이 줄어듭니다.
+          </p>
+        </div>
+
+        <figure class="shot">
+          <img src="./assets/screens/shortsbro_11_settings_scroll1.png" alt="Controls Background Opacity 및 Debug 옵션(실제 캡처)" />
+          <figcaption>실제 캡처: Controls Background Opacity 슬라이더와 Debug 옵션</figcaption>
+        </figure>
+
+        <div class="divider"></div>
+
+        <div class="callout">
+          <strong>Pro 버전 차이점(참고)</strong>
+          <p class="mini">
+            Pro에서는 앱 이름이 <span class="kbd">ShortsBro Pro</span>로 표시되고, <span class="kbd">Background Playback</span> 및
+            <span class="kbd">Native Playback Bridge (Experimental)</span> 토글이 노출됩니다. 또한 광고 차단 항목이
+            <span class="kbd">Ad Removal</span>로 표기됩니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="debug">
+        <h2>Debug 도구</h2>
+        <p>문제 재현/로그 공유가 필요할 때 유용합니다.</p>
+
+        <div class="grid2">
+          <div class="box">
+            <strong>Debug Overlay</strong>
+            <p class="mini">
+              토글을 켜면 화면 상단에 디버그 정보가 표시됩니다(현재 URL, 제목, 로딩 상태, 팝업 상태, progress, console/error 로그,
+              Shorts auto-next 로그 등).
+            </p>
+          </div>
+          <div class="box">
+            <strong>Debug Log File</strong>
+            <p class="mini">
+              토글을 켜면 로그가 텍스트 파일로 저장됩니다(페이지 이동, Shorts attach/advance/wrap, speed/quality/mute/seek 등).
+              설정 화면에서 로그 경로 확인 및 Clear Log를 사용할 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
